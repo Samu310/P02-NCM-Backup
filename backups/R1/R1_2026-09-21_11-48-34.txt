@@ -1,0 +1,165 @@
+Building configuration...
+
+Current configuration : 3585 bytes
+!
+! Last configuration change at 15:35:04 UTC Mon Sep 21 2026
+!
+version 17.18
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname P1_R1-7
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain name tarea1.local
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-2039810
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2039810
+ revocation-check none
+ rsakeypair TP-self-signed-2039810
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-2039810
+ certificate self-signed 01
+  3082032A 30820212 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 
+  2E312C30 2A060355 04030C23 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32303339 38313030 1E170D32 36303930 32313532 3932375A 
+  170D3336 30393031 31353239 32375A30 2E312C30 2A060355 04030C23 494F532D 
+  53656C66 2D536967 6E65642D 43657274 69666963 6174652D 32303339 38313030 
+  82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 82010100 
+  F6CFC04B 355F636D B625CAB4 7226D2EF ABA14371 FD255B91 14324323 A070A682 
+  87334FC5 D62C3010 C0E2B64D 77D19296 9C0CEB5A 2A1AEA27 E60BF279 7CF7F817 
+  E731DD77 312B2300 4C578CDB 01EAC53F 1E8B064A 1F4FB52C 3CCC389D 4B590274 
+  B07152AE 13D73CD1 DE682C1A 992C253C F2AB0424 5B92B694 8F590141 19BCFA7F 
+  C7A268BF 42DE7D60 686FCCCA 3C96FE6B 4D5A12C4 CF365F21 DBB1D357 074595B4 
+  1E03FA72 2DFEB6AA 769B4E43 14CECA63 CB752453 651C542E 9E00B361 CA4C0BF4 
+  3B9956AA C9260868 7F12DEB7 0A0A803D 3BC66E37 E436210F 5B816019 6946075F 
+  E5B5C919 DE9CD683 2747B956 A10E242D BF03D6A4 6F1DE5AC 338EEFCE 80F67391 
+  02030100 01A35330 51301D06 03551D0E 04160414 4C1D5DDD 7DCFA65E D5E536FA 
+  38B1D8A7 5A6E9489 301F0603 551D2304 18301680 144C1D5D DD7DCFA6 5ED5E536 
+  FA38B1D8 A75A6E94 89300F06 03551D13 0101FF04 05300301 01FF300D 06092A86 
+  4886F70D 01010D05 00038201 0100BC97 D99FC94E 6994555A 9963794D E9B8D93F 
+  57AF74E9 335E95F9 8BACFF4B 4080A7BF 91C2A9EB 60294326 5F9845D7 00EB10A4 
+  F9403D16 5D4BDF8B 7136A54A 5EE2A422 338A5D70 A7A513E5 19769832 CB289BF2 
+  2CEE0972 B79DB2D2 89E34002 7C0B4335 AB47DCF7 4F5D36D4 39AD6AF8 DEBECD15 
+  2D4BC491 D43229E8 5C3ED00E 746688FA 30BB7B27 0229B0BB 13E210A9 F327DC06 
+  A04855F1 0EC60F84 AEEE3EBA 52D7086B C02E068E 7A3AD3DE 59B0308A 8A131BDD 
+  3765C405 2034E284 F06276F9 B02C9515 89C9933A D7BA1601 F50C542E 11E63A66 
+  0224ED81 0E5D85C6 27986118 099DC9AF 606F0390 4057DAC9 051447A2 64CB3D47 
+  9207E897 60530913 0AF1B023 1CE0
+  	quit
+!
+!
+memory free low-watermark processor 79866
+!
+!
+spanning-tree mode rapid-pvst
+!
+!
+username admin privilege 15 secret 9 $9$jYrSbbMEncZHO.$kuCZLTAl0s8M8xY4lNw4SFJpnFNFgqpD9iN74zAvOdY
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
+interface Ethernet0/0
+ ip address dhcp
+!
+interface Ethernet0/1
+ description R1-R2
+ ip address 10.0.7.1 255.255.255.252
+!
+interface Ethernet0/2
+ description R1-R3
+ ip address 10.0.7.5 255.255.255.252
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 1.1.1.1
+ passive-interface Ethernet0/0
+ network 1.1.1.1 0.0.0.0 area 0
+ network 10.0.7.0 0.0.0.3 area 0
+ network 10.0.7.4 0.0.0.3 area 0
+ network 192.168.164.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ activation-character 13
+ logging synchronous
+line aux 0
+ activation-character 13
+line vty 0 4
+ activation-character 13
+ login local
+ transport input ssh
+!
+!
+!
+!
+end
