@@ -8,7 +8,7 @@ version 17.18
 service timestamps debug datetime msec
 service timestamps log datetime msec
 !
-hostname P1_R3-7
+hostname prueba3
 !
 boot-start-marker
 boot-end-marker
